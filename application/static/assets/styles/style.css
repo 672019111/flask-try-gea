@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+ul {
+    list-style: none;
+}
+.container {
+    max-width: 1170px;
+    margin: auto;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.align-items-center {
+    align-items: center;
+}
+.justify-content-between {
+    justify-content: space-between;
+}
+/* header */
+header {
+    background-color: var(--color-1);
+    padding: 12px 0; 
+    position: relative;   
+}
+
+header nav,
+header .logo {
+    padding: 0 15px;
+}
+header .logo a {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+}
+header nav ul li {
+    display: inline-block;
+    margin: 40px;
+}
+header nav ul li a {
+    display: block;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+}
+header nav ul li a:hover {
+    color: aqua;
+}
+.toggle {
+    display: none;
+    margin: 20px;
+    justify-content: flex-end;
+}
+#toggle {
+    display: none;
+}
+@media screen and (max-width: 700px) {
+    header nav {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 100%;
+        display: none;
+        background-color: white;
+    }
+    header nav ul li {
+        display: block;
+        margin: 0;
+    }
+    header nav ul li a{
+        padding: 14px 28px;
+        text-align: left;
+    }
+    #toggle:checked+nav {
+        opacity: 1;
+        visibility: visible;
+        display: flex;
+    }
+    .toggle {
+        display: flex;
+    }
+}
+
+/* main */
+/* about me start */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+ }
+.home{
+    display: flex;
+	max-width: 95%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.hai{
+    flex-grow: 1;
+    
+}
+.me-img{
+    height: auto;
+	width: 430px;
+}
+h1{
+	color: black;
+	margin: 20px 0px 20px;
+	font-size: 75px;
+}
+h3{
+	color: black;
+	font-size: 25px;
+	margin-bottom: 50px;
+}
+h4{
+	color: black;
+	letter-spacing: 2px;
+	font-size: 20px;
+}
+
+@media screen and (max-width: 700px) {
+    .home{
+        flex-direction: column;
+    }
+    .WhatIdo{
+        flex-direction: column;
+    }
+    .content-whatido{
+        padding-top: 20px;
+    }
+    aside{
+        flex-direction: column;
+    }
+}
+
+.aboutMe{
+    background-color: white;
+    text-align: center;
+}
+aside{
+    display: flex;
+}
+.aboutMe p{
+    
+    font-weight: bold;
+}
+
+/* WhatIdo */
+.title1{
+    text-align: center;
+}
+.WhatIdo{
+    display: flex;
+    padding-top: 20px;
+    align-items: center;
+}
+.imgwhatido img{
+    height: 200px;
+}
+.content-whatido{
+    justify-content: flex-end;
+    text-align: center;
+    padding-left: 20px;
+}
+.content-whatido article{
+    color: black;
+	letter-spacing: 2px;
+	font-size: 20px;
+    padding: auto;
+}
+footer p{
+    text-align: center;
+}
+
