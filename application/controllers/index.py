@@ -7,8 +7,8 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/index')
-def home():
+@app.route('/i')
+def iphone():
     data = {
         "id": 1,
         "title": "iPhone 9",
