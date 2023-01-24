@@ -1,5 +1,4 @@
-from settings.queryFile import QueryStringDb
-
+from application.settings.queryFile import QueryStringDb
 
 def getPenerbit():
     customQuery = QueryStringDb()

@@ -1,6 +1,5 @@
 import psycopg2
-from credentials import *
-
+from application.settings.queryFile import *
 
 def responseJSON(status_code, flag, message, result):
     resp = {}
