@@ -1,5 +1,5 @@
 import psycopg2
-from settings.credentials import *
+from credentials import *
 
 
 def responseJSON(status_code, flag, message, result):
