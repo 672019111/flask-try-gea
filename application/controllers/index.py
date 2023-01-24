@@ -7,6 +7,10 @@ def home():
     return render_template("index.html")
 
 
+@app.route('/note')
+def note():
+    return render_template("note.html")
+
 @app.route('/i')
 def iphone():
     data = getPenerbit()
