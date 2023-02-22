@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js">
+    </script>
+
+    <title>JonathanGea - MoneyTracking</title>
+</head>
+
+<body>
+    <div class="container-fluid ">
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand fw-bold" href="#">MoneyTracking</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Active</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="container mt-5">
+                <div id="container-card">
+                </div>
+
+            </div>
+        </main>
+
+        <footer>
+
+
+        </footer>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+<script>
+    const terbilang = (number) => {
+        if (!number) {
+            return "";
+        }
+        const bilangan = [
+            "", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"
+        ];
+
+        if (number < 12) {
+            return bilangan[number];
+        } else if (number < 20) {
+            return bilangan[number - 10] + " belas";
+        } else if (number < 100) {
+            return (
+                bilangan[Math.floor(number / 10)] +
+                " puluh " +
+                bilangan[number % 10]
+            );
+        } else if (number < 200) {
+            return "seratus " + terbilang(number - 100);
+        } else if (number < 1000) {
+            return (
+                bilangan[Math.floor(number / 100)] +
+                " ratus " +
+                terbilang(number % 100)
+            );
+        } else if (number < 2000) {
+            return "seribu " + terbilang(number - 1000);
+        } else if (number < 1000000) {
+            return (
+                terbilang(Math.floor(number / 1000)) +
+                " ribu " +
+                terbilang(number % 1000)
+            );
+        } else if (number < 1000000000) {
+            return (
+                terbilang(Math.floor(number / 1000000)) +
+                " juta " +
+                terbilang(number % 1000000)
+            );
+        } else if (number >= 1000000000) {
+            return "Angka terlalu besar";
+        }
+    }
+
+    const conferNominal = (id) => {
+
+        let idterbilang = '*#terbilang' + '-' + id
+        let nominal = '*#nominal' + '-' + id
+        const terbilangElement = $(idterbilang);
+
+        console.log(nominal)
+        const inputElement = $(nominal);
+
+        inputElement.on("input", function (event) {
+            let value = event.target.value;
+
+            // Format mata uang rupiah
+            value = value.replace(/[^,\d]/g, "").toString();
+            valuetemp = value
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            value = "Rp. " + value;
+
+            // Set nilai baru pada elemen input
+            event.target.value = value;
+
+            // Mengubah nilai input menjadi terbilang tertulis
+            const terbilangTertulis = terbilang(valuetemp);
+
+            // Menampilkan terbilang tertulis di elemen #terbilang
+            terbilangElement.text(terbilangTertulis);
+        });
+    }
+
+    $(document).ready(function () {
+
+        // nerima data
+        $.ajax({
+            url: "{{ url_for ('moneyTracking') }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                // Lakukan sesuatu dengan data yang diterima
+                // console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+
+                    const number = item.nominal;
+                    const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+
+                    html = `
+                    <div class="card m-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">` + item.nama + `</h5>
+                            <h6 class="card-subtitle mb-2 text-muted"> ` + formattedNumber + `</h6>
+                            <div class="mb-3">
+                                <label for="nominal" class="form-label">Email address</label>
+                                <input type="text" class="form-control" id="nominal-`+ item.id + `">
+                            </div>
+                            <p class="card-text" id="terbilang-`+ item.id + `"></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-primary ms-auto">Simpan</button>
+                        </div>
+                        
+                    </div>
+                    `
+                    $("#container-card").append(html)
+
+                    conferNominal(item.id)
+                }
+
+
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+
+
+
+
+    })
+
+
+</script>
+
+</html>

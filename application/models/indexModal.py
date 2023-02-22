@@ -1,9 +1,18 @@
 from application.settings.queryFile import QueryStringDb
 
-def getPenerbit():
+
+def getMoneyTrack():
     customQuery = QueryStringDb()
     query = '''         
-        select current_date
+        select 
+            id, 
+            nama, 
+            nominal, 
+            nominalawal 
+        from 
+            moneytrack m 
+        order by 
+            id
             '''
     kondisi = {}
     return customQuery.select(query, kondisi)
