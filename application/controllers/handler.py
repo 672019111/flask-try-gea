@@ -13,10 +13,11 @@ def addmoneyTrackingHandler():
 
     nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
     
-    result = createMoneyTrack(nama, nominal)['result']
+    result = createMoneyTrack(nama, nominal)[0]['result']
+
+    print("addmoneyTrackingHandler()", result)
     
     return result
-
 
 def editmoneyTrackingHandler():
     id = request.form['id']

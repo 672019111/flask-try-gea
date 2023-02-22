@@ -5,7 +5,6 @@ from application.controllers.handler import *
 
 # controlers untuk ngatur rooter
 
-
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -38,11 +37,9 @@ def moneyTracking():
     result = moneyTrackingHandler()
     if request.method == 'POST':
         result = addmoneyTrackingHandler()
-        print(result)
         return jsonify_response(201, 'Success', 'CREATED', result)
     if request.method == 'PUT':
         result = editmoneyTrackingHandler()
-        print(result)
         return jsonify_response(200, 'Success', 'ok', result)
 
     return jsonify_response(200, 'Success', 'Ok', result)
