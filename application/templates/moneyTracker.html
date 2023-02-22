@@ -261,7 +261,10 @@
                         type: 'PUT',
                         url: "{{ url_for ('moneyTracking') }}",
                         data: formData,
-
+                        beforeSend: function () {
+                            // Memanggil fungsi showLoading sebelum AJAX dimulai
+                            showLoading();
+                        },
                         success: function (response) {
 
                             // alert('Data berhasil ditambahkan!');
@@ -276,6 +279,7 @@
                         }
                     });
                 });
+                hideLoading()
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus, errorThrown);
