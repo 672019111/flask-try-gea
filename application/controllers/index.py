@@ -15,16 +15,34 @@ def home():
 def moneyTrackingpage():
     return render_template("moneyTracker.html")
 
+
 @app.route('/note')
 def note():
     return render_template("note.html")
 
 
 # web servis
+def jsonify_response(status_code, status, message=None, data=None):
+    response = {
+        'status_code': status_code,
+        'status': status,
+        'message': message
+    }
+    if data:
+        response['data'] = data
+    return jsonify(response)
 
-@app.route('/moneyTracking')
+
+@app.route('/moneyTracking', methods=['GET', 'POST', 'PUT'])
 def moneyTracking():
-    data = moneyTrackingHandler()
-    return jsonify (data)
+    result = moneyTrackingHandler()
+    if request.method == 'POST':
+        result = addmoneyTrackingHandler()
+        print(result)
+        return jsonify_response(201, 'Success', 'CREATED', result)
+    if request.method == 'PUT':
+        result = editmoneyTrackingHandler()
+        print(result)
+        return jsonify_response(200, 'Success', 'ok', result)
 
-
+    return jsonify_response(200, 'Success', 'Ok', result)

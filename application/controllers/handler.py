@@ -1,11 +1,34 @@
 from application.models.indexModal import *
 
-def moneyTrackingHandler():
+from flask import request
 
-    # data = getMoneyTrack()['result']
-    data = [{'id': 1, 'nama': 'Belanja bulanan', 'nominal': 1500000, 'nominalawal': 0},
-            {'id': 2, 'nama': 'Makan siang', 'nominal': 50000, 'nominalawal': 0},
-            {'id': 3, 'nama': 'Beli buku', 'nominal': 75000, 'nominalawal': 0},
-            {'id': 4, 'nama': 'Bayar listrik', 'nominal': 500000, 'nominalawal': 0},
-            {'id': 5, 'nama': 'Pembayaran hutang', 'nominal': 1000000, 'nominalawal': 0}]
-    return data
+
+def moneyTrackingHandler():
+    result = readMoneyTrack()['result']
+    return result
+
+def addmoneyTrackingHandler():
+    nama = request.form['nama']
+    nominal = request.form['nominal']
+
+    nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
+    
+    result = createMoneyTrack(nama, nominal)['result']
+    
+    return result
+
+
+def editmoneyTrackingHandler():
+    id = request.form['id']
+    nominal = request.form['nominal']
+
+    nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
+
+    dataMoneyTracking = readMoneyTrackByID(id)['result']
+
+    SisaBudget = dataMoneyTracking[0]['nominal']
+    hasil = SisaBudget-nominal
+    result = UpdateMoneyTrack (id, hasil)
+    print (result)
+    return dataMoneyTracking
+    
