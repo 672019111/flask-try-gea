@@ -220,8 +220,8 @@
                         const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
 
                         html = `
-                                <form id="form-pengeluaran">
-                                    <div class="card m-3" style="width: 18rem;">
+                                <form id="form-pengeluaran" class="m-3">
+                                    <div class="card w-250" style="width: 18rem;">
                                         <div class="card-body">
                                             <h5 class="card-title">` + item.nama + `</h5>
                                             <h6 class="card-subtitle mb-2 text-muted"> ` + formattedNumber + `</h6>
@@ -248,10 +248,10 @@
                     alert('Terjadi kesalahan!');
                 }
 
-                $('#form-pengeluaran').submit(function (event) {
+                $('*#form-pengeluaran').submit(function (event) {
 
                     // menghentikan aksi default form submit
-                    event.preventDefault();
+                    // event.preventDefault();
 
                     // mengambil data dari form
                     var formData = $(this).serialize();
