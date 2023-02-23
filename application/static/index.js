@@ -6,6 +6,7 @@ function showLoading() {
 
 // Fungsi untuk menclose loading
 function hideLoading() {
+    console.log ("hide loading")
     $('#loadingModal').modal('hide');
 }
 
