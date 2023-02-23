@@ -73,3 +73,18 @@ def UpdateMoneyTrack(id, nominal):
 
     }
     return customQuery.execute(query, kondisi)
+
+
+def DeleteMoneyTrack(id):
+    customQuery = QueryStringDb()
+    query = '''         
+        DELETE FROM 
+            moneytrack
+        WHERE 
+            id = %(id)s;
+            '''
+    kondisi = {
+        'id': id,
+
+    }
+    return customQuery.execute(query, kondisi)

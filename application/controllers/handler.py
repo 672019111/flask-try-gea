@@ -30,6 +30,14 @@ def editmoneyTrackingHandler():
     SisaBudget = dataMoneyTracking[0]['nominal']
     hasil = SisaBudget-nominal
     result = UpdateMoneyTrack (id, hasil)
+    return result
+
+
+def deletemoneyTrackingHandler():
+    id = request.form['id']
+
+    result = DeleteMoneyTrack(id)
     print (result)
-    return dataMoneyTracking
+
+    return result
     

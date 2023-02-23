@@ -22,7 +22,7 @@
         crossorigin="anonymous"></script>
 
     <script src="{{ url_for('static', filename='index.js') }}"></script>
-
+    <script src="https://kit.fontawesome.com/e9a38f0d1e.js" crossorigin="anonymous"></script>
 
     <title>JonathanGea - MoneyTracking</title>
 </head>
@@ -100,6 +100,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <i class="fas fa-edit"></i>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
@@ -107,7 +108,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- <div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" -->
     <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
@@ -127,6 +127,16 @@
 </body>
 
 <script>
+    // Fungsi untuk menampilkan loading
+    function showLoading() {
+        $('#loadingModal').modal('show');
+
+    }
+
+    // Fungsi untuk menclose loading
+    function hideLoading() {
+        $('#loadingModal').modal('hide');
+    }
     const conferNominal = (id) => {
 
         let idterbilang = '*#terbilang' + '-' + id
@@ -155,7 +165,7 @@
         });
     }
 
-    const pengeluaran = () => {
+    const action = () => {
         $('*#form-pengeluaran').submit(function (event) {
             event.preventDefault();
             var formData = $(this).serialize();
@@ -177,6 +187,31 @@
                 }
             });
         });
+
+        $('*#delete').click(function () {
+            debugger;
+            var id = $(this).attr('value');
+            var name = $(this).data('name');
+            if (confirm(`Anda yakin ingin menghapus data dengan ${name}?`)) {
+                $.ajax({
+                    url: "{{ url_for('moneyTracking') }}",
+                    method: "DELETE",
+                    beforeSend: function () {
+                        showLoading();
+                    },
+                    data: { id: id },
+                    success: function (response) {
+                        msg('Pesan berhasil terkirim!', 'success');
+                        displaydata();
+                        hideLoading();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
+
     }
     const displaydata = () => {
         $.ajax({
@@ -211,50 +246,23 @@
                 items.forEach(item => {
                     const number = item.nominal;
                     const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
-                    let bgclass = '';
+                    // let bgclass = '#45ccb1';
                     const numColor = number / item.nominalawal;
-
-                    // if (numColor < 0.25) {
-                    //     bgclass = '#9EA3B0';
-                    // } else if (numColor < 0.5) {
-                    //     bgclass = '#5CA4A9';
-                    // } else if (numColor < 0.75) {
-                    //     bgclass = '#9BC1BC';
-                    // } else {
-                    //     bgclass = '#F4F1BB';
-                    // }
-
-                    // if (numColor < 0.25) {
-                    //     bgclass = '#45ccb1';
-                    // } else if (numColor < 0.5) {
-                    //     bgclass = '#53b0f8';
-                    // } else if (numColor < 0.75) {
-                    //     bgclass = '#ffc241';
-                    // } else {
-                    //     bgclass = '#f66e84';
-                    // }
-                    if (numColor < 0.25) {
-                        bgclass = '#f66e84';
-                    } else if (numColor < 0.5) {
-                        bgclass = '#ffc241';
-                    } else if (numColor < 0.75) {
-                        bgclass = '#53b0f8';
-                    } else {
-                        bgclass = '#45ccb1';
-                    }
-                    console.log(numColor, bgclass, item.id)
 
                     html += `
                         <form id="form-pengeluaran" class="m-3">
-                            <!-- <div class="card w-250 ${bgclass}" style="width: 18rem;"> -->
-                                <div class="card w-250 " style="width: 18rem; background-color: ${bgclass};">
+                            <div class="card w-250 " style="width: 18rem;">          
+                                <div class="card-header">
+                                <button type="button" class="btn float-end"><i class="fas fa-trash-alt text-danger"  id="delete" value=${item.id} data-name=${item.nama}></i></button>
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">${item.nama}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">${formattedNumber}</h6>
                                     <div class="mb-3">
                                         <input type="hidden" name="id" value="${item.id}">
                                         <label for="nominal" class="form-label">Pengeluaran</label>
-                                        <input type="text" class="form-control" name="nominal" id="nominal-${item.id}" required title="Harap isi bidang ini">
+                                        <input type="text" class="form-control" name="nominal" id="nominal-${item.id}" required
+                                            title="Harap isi bidang ini">
                                     </div>
                                     <p class="card-text" id="terbilang-${item.id}"></p>
                                 </div>
@@ -269,7 +277,7 @@
                 $("#container-card").html(html);
                 items.forEach(item => conferNominal(item.id));
                 hideLoading();
-                pengeluaran();
+                action();
             },
 
             error: function (jqXHR, textStatus, errorThrown) {

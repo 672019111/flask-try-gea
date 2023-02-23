@@ -31,7 +31,7 @@ def jsonify_response(status_code, status, message=None, data=None):
         response['data'] = data
     return jsonify(response)
 
-@app.route('/moneyTracking', methods=['GET', 'POST', 'PUT'])
+@app.route('/moneyTracking', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def moneyTracking():
     result = moneyTrackingHandler()
     if request.method == 'POST':
@@ -39,6 +39,9 @@ def moneyTracking():
         return jsonify_response(201, 'Success', 'CREATED', result)
     if request.method == 'PUT':
         result = editmoneyTrackingHandler()
+        return jsonify_response(200, 'Success', 'ok', result)
+    if request.method == 'DELETE':
+        result = deletemoneyTrackingHandler()
         return jsonify_response(200, 'Success', 'ok', result)
 
     return jsonify_response(200, 'Success', 'Ok', result)
