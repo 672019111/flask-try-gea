@@ -31,7 +31,6 @@ def jsonify_response(status_code, status, message=None, data=None):
         response['data'] = data
     return jsonify(response)
 
-
 @app.route('/moneyTracking', methods=['GET', 'POST', 'PUT'])
 def moneyTracking():
     result = moneyTrackingHandler()

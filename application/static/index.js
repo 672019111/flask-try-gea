@@ -8,13 +8,13 @@ function showLoading() {
 function hideLoading() {
     console.log ("hide loading")
     // $('#loadingModal').css('display', 'none');
-    $('#loadingModal').css('display', 'none');
+    // $('#loadingModal').css('display', 'none');
     // $('body').css('pointer-events', 'auto');
     // $('#loadingModal').css('display', 'block');
     // $('#loadingModal').hide();
 
-    // $('#loadingModal').modal('hide');
-    $('.modal-backdrop.fade.show').remove();
+    $('#loadingModal').modal('hide');
+    // $('.modal-backdrop.fade.show').remove();
 }
 
 function msg(message, type) {
