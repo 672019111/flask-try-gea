@@ -126,14 +126,22 @@
 
 <script>
     // Fungsi untuk menampilkan loading
+    const oldContent = $('#loadingModal').html();
     function showLoading() {
-        $('#loadingModal').modal('show');
+        // $('#loadingModal').modal('show');
+        if ($('#loadingModal').html() == '') {
+            $('#loadingModal').html(oldContent);
+            $('#loadingModal').modal('show');
+        }else{
+            $('#loadingModal').modal('show');
+        }
 
     }
 
     // Fungsi untuk menclose loading
     function hideLoading() {
-        $('#loadingModal').modal('hide');
+        // $('#loadingModal').modal('hide');
+        var oldContent = $('#loadingModal').html();
         setTimeout(function () {
             $('#loadingModal').empty();
         }, 2000);
