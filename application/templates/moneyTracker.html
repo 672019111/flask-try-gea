@@ -23,6 +23,8 @@
     <div class="container-fluid ">
 
         <header>
+
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
                     <a class="navbar-brand fw-bold" href="#">MoneyTracking</a>
@@ -49,6 +51,7 @@
         </header>
         <main>
             <div class="container mt-5">
+
                 <div id="container-card" style="display: flex; flex-wrap: wrap;">
                 </div>
 
@@ -88,7 +91,6 @@
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -97,8 +99,23 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <!-- loading -->
+    <!-- <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" style="border: none;">
             <div class="modal-content">
                 <div class="modal-body d-flex justify-content-center align-items-center" style="min-height: 100px;">
                     <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
@@ -109,66 +126,12 @@
         </div>
     </div>
 
+
+
 </body>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+
 <script>
-
-
-    // Fungsi untuk menampilkan loading
-    function showLoading() {
-        $('#loadingModal').modal('show');
-
-    }
-
-    // Fungsi untuk menclose loading
-    function hideLoading() {
-        $('#loadingModal').modal('hide');
-    }
-
-    const terbilang = (number) => {
-        if (!number) {
-            return "";
-        }
-        const bilangan = [
-            "", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"
-        ];
-
-        if (number < 12) {
-            return bilangan[number];
-        } else if (number < 20) {
-            return bilangan[number - 10] + " belas";
-        } else if (number < 100) {
-            return (
-                bilangan[Math.floor(number / 10)] +
-                " puluh " +
-                bilangan[number % 10]
-            );
-        } else if (number < 200) {
-            return "seratus " + terbilang(number - 100);
-        } else if (number < 1000) {
-            return (
-                bilangan[Math.floor(number / 100)] +
-                " ratus " +
-                terbilang(number % 100)
-            );
-        } else if (number < 2000) {
-            return "seribu " + terbilang(number - 1000);
-        } else if (number < 1000000) {
-            return (
-                terbilang(Math.floor(number / 1000)) +
-                " ribu " +
-                terbilang(number % 1000)
-            );
-        } else if (number < 1000000000) {
-            return (
-                terbilang(Math.floor(number / 1000000)) +
-                " juta " +
-                terbilang(number % 1000000)
-            );
-        } else if (number >= 1000000000) {
-            return "Angka terlalu besar";
-        }
-    }
-
     const conferNominal = (id) => {
 
         let idterbilang = '*#terbilang' + '-' + id
@@ -197,115 +160,140 @@
         });
     }
 
+    const pengeluaran = () => {
+        $('*#form-pengeluaran').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'PUT',
+                url: "{{ url_for ('moneyTracking') }}",
+                data: formData,
+                beforeSend: function () {
+                    showLoading();
+                },
+                success: function (response) {
+                    displaydata()
+                    msg('Pesan berhasil terkirim!', 'success');
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan!');
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    }
+    const displaydata = () => {
+        $.ajax({
+            url: "{{ url_for ('moneyTracking') }}",
+            type: "GET",
+            dataType: "json",
+            beforeSend: function () {
+                showLoading();
+            },
+            success: function (result) {
+                if (!result.data) {
+                    const html = `
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Data belum tersedia</h5>
+                                <p class="card-text">Belum ada data yang tersimpan.</p>
+                            </div>
+                        </div>
+                    `;
+                    $("#container-card").html(html);
+                    return;
+                }
+
+                if (result.status !== 'Success') {
+                    alert('Terjadi kesalahan!');
+                    return;
+                }
+
+                const items = result.data;
+                let html = '';
+
+                items.forEach(item => {
+                    const number = item.nominal;
+                    const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+                    let bgclass = '';
+                    const numColor = number / item.nominalawal;
+
+                    if (numColor < 0.25) {
+                        bgclass = 'bg-success';
+                    } else if (numColor < 0.5) {
+                        bgclass = 'bg-info';
+                    } else if (numColor < 0.75) {
+                        bgclass = 'bg-primary';
+                    } else {
+                        bgclass = 'bg-dark';
+                    }
+                    console.log (item.nominal,item.id,bgclass)
+
+                    // const gradient = `linear-gradient(to right, ${bgclass} 0%, ${bgclass} ${(number / 1000000) * 100}%, #000 ${(number / 1000000) * 100}%, #000 100%)`;
+
+                    html += `
+                        <form id="form-pengeluaran" class="m-3">
+                            <div class="card w-250 ${bgclass}" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${item.nama}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">${formattedNumber}</h6>
+                                    <div class="mb-3">
+                                        <input type="hidden" name="id" value="${item.id}">
+                                        <label for="nominal" class="form-label">Pengeluaran</label>
+                                        <input type="text" class="form-control" name="nominal" id="nominal-${item.id}" required title="Harap isi bidang ini">
+                                    </div>
+                                    <p class="card-text" id="terbilang-${item.id}"></p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-outline-primary ms-auto">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                    `;
+                });
+
+                $("#container-card").html(html);
+                items.forEach(item => conferNominal(item.id));
+                hideLoading();
+                pengeluaran();
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+
+
+    }
+
     $(document).ready(function () {
-        conferNominal("tambah")
+        conferNominal("tambah");
+        displaydata();
         $('#form-tambah').submit(function (event) {
+            event.preventDefault();
+
+
             var formData = $(this).serialize();
             $.ajax({
                 url: "{{ url_for ('moneyTracking') }}",
                 type: "POST",
                 dataType: "json",
                 data: formData,
-
                 beforeSend: function () {
-                    // Memanggil fungsi showLoading sebelum AJAX dimulai
+                    $('#modalTambah').modal('hide');
                     showLoading();
+
                 },
                 success: function (result) {
-                    hideLoading()
+                    $('#modalTambah').trigger('reset');
+                    $('#modalTambah').modal('hide');
+                    displaydata()
+                    msg('Pesan berhasil terkirim!', 'success');
 
                 }
             })
-
-
         })
-
-        // nerima data
-        $.ajax({
-            url: "{{ url_for ('moneyTracking') }}",
-            type: "GET",
-            dataType: "json",
-            beforeSend: function () {
-                // Memanggil fungsi showLoading sebelum AJAX dimulai
-                showLoading();
-            },
-            success: function (result) {
-
-                if (result['status'] === 'Success') {
-                    result = result['data']
-                    for (var i = 0; i < result.length; i++) {
-                        var item = result[i];
-
-                        const number = item.nominal;
-                        const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
-
-                        html = `
-                                <form id="form-pengeluaran" class="m-3">
-                                    <div class="card w-250" style="width: 18rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">` + item.nama + `</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted"> ` + formattedNumber + `</h6>
-                                            <div class="mb-3">
-                                                <input type="hidden" name="id" value="`+ item.id + `">
-                                                <label for="nominal" class="form-label">Email address</label>
-                                                <input type="text" class="form-control" name="nominal" id="nominal-`+ item.id + `">
-                                            </div>
-                                            <p class="card-text" id="terbilang-`+ item.id + `"></p>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-outline-primary ms-auto">Simpan</button>
-                                        </div>
-                                    </div>
-                                </form>
-                    `
-                        $("#container-card").append(html)
-
-                        conferNominal(item.id)
-                        hideLoading()
-
-                    }
-                } else {
-                    alert('Terjadi kesalahan!');
-                }
-
-                $('*#form-pengeluaran').submit(function (event) {
-
-                    // menghentikan aksi default form submit
-                    // event.preventDefault();
-
-                    // mengambil data dari form
-                    var formData = $(this).serialize();
-
-                    // membuat AJAX request
-                    $.ajax({
-                        type: 'PUT',
-                        url: "{{ url_for ('moneyTracking') }}",
-                        data: formData,
-                        beforeSend: function () {
-                            // Memanggil fungsi showLoading sebelum AJAX dimulai
-                            showLoading();
-                        },
-                        success: function (response) {
-
-                            // alert('Data berhasil ditambahkan!');
-                            // $('#form-tambah')[0].reset();
-                            // $('#modalTambah').modal('hide');
-                            hideLoading()
-
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Terjadi kesalahan!');
-                            console.log(xhr.responseText);
-                        }
-                    });
-                });
-                hideLoading()
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
-            }
-        });
-
     })
 
 </script>

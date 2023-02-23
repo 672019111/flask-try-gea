@@ -13,7 +13,7 @@ def addmoneyTrackingHandler():
 
     nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
     
-    result = createMoneyTrack(nama, nominal)[0]['result']
+    result = createMoneyTrack(nama, nominal)
 
     print("addmoneyTrackingHandler()", result)
     
