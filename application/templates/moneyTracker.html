@@ -59,10 +59,15 @@
         </header>
         <main>
             <div class="container mt-5">
-
                 <div id="container-card" style="display: flex; flex-wrap: wrap;">
                 </div>
+                <!-- <div style="width: 10px; height: 10px; background-color: #f66e84;"></div>
+                <div style="width: 10px; height: 10px; background-color: #ffc241;"></div>
+                <div style="width: 10px; height: 10px; background-color: #53b0f8;"></div>
+                <div style="width: 10px; height: 10px; background-color: #45ccb1;"></div> -->
 
+                <!-- if (numColor < 0.25) { bgclass='#f66e84' ; } else if (numColor < 0.5) { bgclass='#ffc241' ; } else if (numColor < 0.75)
+    { bgclass='#53b0f8' ; } else { bgclass='#45ccb1' ; } -->
             </div>
         </main>
 
@@ -105,8 +110,7 @@
 
 
     <!-- <div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" -->
-        <div class="modal fade" id="loadingModal" tabindex="-1" 
-        aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered" style="border: none;">
             <div class="modal-content">
                 <div class="modal-body d-flex justify-content-center align-items-center" style="min-height: 100px;">
@@ -210,19 +214,40 @@
                     let bgclass = '';
                     const numColor = number / item.nominalawal;
 
+                    // if (numColor < 0.25) {
+                    //     bgclass = '#9EA3B0';
+                    // } else if (numColor < 0.5) {
+                    //     bgclass = '#5CA4A9';
+                    // } else if (numColor < 0.75) {
+                    //     bgclass = '#9BC1BC';
+                    // } else {
+                    //     bgclass = '#F4F1BB';
+                    // }
+
+                    // if (numColor < 0.25) {
+                    //     bgclass = '#45ccb1';
+                    // } else if (numColor < 0.5) {
+                    //     bgclass = '#53b0f8';
+                    // } else if (numColor < 0.75) {
+                    //     bgclass = '#ffc241';
+                    // } else {
+                    //     bgclass = '#f66e84';
+                    // }
                     if (numColor < 0.25) {
-                        bgclass = 'bg-success';
+                        bgclass = '#f66e84';
                     } else if (numColor < 0.5) {
-                        bgclass = 'bg-info';
+                        bgclass = '#ffc241';
                     } else if (numColor < 0.75) {
-                        bgclass = 'bg-primary';
+                        bgclass = '#53b0f8';
                     } else {
-                        bgclass = 'bg-dark';
+                        bgclass = '#45ccb1';
                     }
+                    console.log(numColor, bgclass, item.id)
 
                     html += `
                         <form id="form-pengeluaran" class="m-3">
-                            <div class="card w-250 ${bgclass}" style="width: 18rem;">
+                            <!-- <div class="card w-250 ${bgclass}" style="width: 18rem;"> -->
+                                <div class="card w-250 " style="width: 18rem; background-color: ${bgclass};">
                                 <div class="card-body">
                                     <h5 class="card-title">${item.nama}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">${formattedNumber}</h6>
