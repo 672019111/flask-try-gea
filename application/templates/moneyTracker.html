@@ -141,9 +141,10 @@
     // Fungsi untuk menclose loading
     function hideLoading() {
         // $('#loadingModal').modal('hide');
-        var oldContent = $('#loadingModal').html();
         setTimeout(function () {
             $('#loadingModal').empty();
+            $('.modal-backdrop.fade.show').remove()
+            $('#loadingModal').remove()
         }, 2000);
     }
     const conferNominal = (id) => {
