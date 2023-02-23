@@ -1,4 +1,4 @@
 "# flask-try-gea" 
 isu 
-- reset form tambah
-- modal tambah ada ikon di footer
+- reset form tambah [done]
+- modal tambah ada ikon di footer [done]

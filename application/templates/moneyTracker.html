@@ -128,24 +128,24 @@
     // Fungsi untuk menampilkan loading
     const oldContent = $('#loadingModal').html();
     function showLoading() {
-        // $('#loadingModal').modal('show');
-        if ($('#loadingModal').html() == '') {
-            $('#loadingModal').html(oldContent);
-            $('#loadingModal').modal('show');
-        }else{
-            $('#loadingModal').modal('show');
-        }
+        $('#loadingModal').modal('show');
+        // if ($('#loadingModal').html() == '') {
+        //     $('#loadingModal').html(oldContent);
+        //     $('#loadingModal').modal('show');
+        // }else{
+        //     $('#loadingModal').modal('show');
+        // }
 
     }
 
     // Fungsi untuk menclose loading
     function hideLoading() {
-        // $('#loadingModal').modal('hide');
-        setTimeout(function () {
-            $('#loadingModal').empty();
-            $('.modal-backdrop.fade.show').remove()
-            $('#loadingModal').remove()
-        }, 2000);
+        $('#loadingModal').modal('hide');
+        // setTimeout(function () {
+        //     $('#loadingModal').empty();
+        //     $('.modal-backdrop.fade.show').remove()
+        //     $('#loadingModal').remove()
+        // }, 2000);
     }
     const conferNominal = (id) => {
 
