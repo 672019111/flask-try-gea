@@ -4,6 +4,12 @@ function msg(message, type) {
     var alertClass = 'alert-' + type;
     var alert = '<div class="alert ' + alertClass + '" role="alert">' + message + '</div>';
     $('#alert-container').html(alert);
+
+    // Menutup alert dalam 5 detik
+    setTimeout(function () {
+        $('#alert-container').empty();
+    }, 5000);
+
 }
 
 const terbilang = (number) => {
