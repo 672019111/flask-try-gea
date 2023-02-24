@@ -32,12 +32,51 @@
     <!-- Menambahkan ikon untuk aplikasi web di perangkat Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='/assets/img/icon.png') }}">
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Vuo1JvPVyKtWfEhpzT+T9gH+cGJZ3q+//t+FpCtLJxjfxhCtJd0NE+PskXl5z+A4" crossorigin="anonymous"> -->
 
 
+    <style>
+        .social-icons {
+            text-align: center;
+            line-height: 3rem;
+            /* sesuaikan dengan tinggi dari elemen parent */
+        }
+
+        .social-icons i {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Style for active button */
+        .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Style for social media icons */
+        .social-icons a {
+            display: inline-block;
+            color: #fff;
+            font-size: 24px;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin-right: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        .social-icons a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
                 <div class="card">
@@ -45,7 +84,6 @@
                         <h4>Form Login</h4>
                     </div>
                     <div class="card-body">
-                        <!-- <form id="login-form" > -->
                         <form action="{{ url_for('login') }}" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">email</label>
@@ -63,9 +101,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="container mt-5">
+    <!-- <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -76,7 +114,6 @@
                             aria-label="Slide 2"></button>
                     </div>
                     <div class="carousel-inner">
-                        <!-- Registrasi Form -->
                         <div class="carousel-item active">
                             <div class="card">
                                 <div class="card-header">
@@ -106,7 +143,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Login Form -->
                         <div class="carousel-item">
                             <div class="card">
                                 <div class="card-header">
@@ -145,9 +181,109 @@
                 </div>
             </div>
         </div>
+    </div> -->
+    <!--  -->
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between mb-3">
+                    <!-- Navigation button to switch between Login and Register -->
+                    <button class="btn btn-primary active" id="btn-login">Login</button>
+                    <button class="btn btn-primary" id="btn-register">Register</button>
+                </div>
+
+                <!-- Social media icons -->
+                <div class="social-icons mb-3">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-google"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-github"></i>
+                </div>
+
+                <div class="mb-3">
+                    <p class="text-center mb-0">or</p>
+                </div>
+
+                <!-- Login Form -->
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                        <div class="form-text"><a href="#">Forgot password?</a></div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                        <label class="form-check-label" for="remember-me">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="form-register" style="display: none;">
+                    <div class="mb-3">
+                        <label for="register-name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="register-name" name="register-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="register-email" name="register-email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="register-password" name="register-password">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms">
+                        <label class="form-check-label" for="terms">I have read and agree to the terms and
+                            conditions</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+
+
 </body>
 <script>
+    // Switch between Login and Register forms
+    const btnLogin = document.querySelector('#btn-login');
+    const btnRegister = document.querySelector('#btn-register');
+    // const formLogin = document.querySelector('#form-login');
+    // const formRegister = document.querySelector('#form-register');
+
+    btnLogin.addEventListener('click', () => {
+        btnLogin.classList.add('active');
+        btnRegister.classList.remove('active');
+        formLogin.style.display = 'block';
+        formRegister.style.display = 'none';
+    });
+
+    btnRegister.addEventListener('click', () => {
+        btnLogin.classList.remove('active');
+        btnRegister.classList.add('active');
+        formLogin.style.display = 'none';
+        formRegister.style.display = 'block';
+    });
+
+    // // Submit Login form
+    // const formLoginSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log('Login form submitted');
+    // }
+    // formLogin.addEventListener('submit', formLoginSubmit);
+
+    // // Submit Register form
+    // const formRegisterSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log('Register form submitted');
+    // }
+    // formRegister.addEventListener('submit', formRegisterSubmit);
 </script>
 
 </html>
