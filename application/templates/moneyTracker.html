@@ -67,7 +67,6 @@
                 <div id="alert-container"></div>
                 <div id="container-card" class="row" style="display: flex; flex-wrap: wrap;">
                 </div>
-
             </div>
         </main>
         <footer>
@@ -134,6 +133,15 @@
 
 <script>
     // Fungsi untuk menampilkan loading
+    // Membuat objek tanggal untuk tanggal hari ini
+    var today = new Date();
+
+    // Menghitung jumlah hari dalam bulan ini
+    var daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+    // Menghitung berapa hari lagi untuk akhir bulan
+    var daysLeft = (daysInMonth + 2) - today.getDate();
+
     const oldContent = $('#loadingModal').html();
     function showLoading() {
         $('#loadingModal').modal('show');
@@ -276,6 +284,14 @@
                     const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
                     let color = '';
                     const numColor = number / item.nominalawal;
+                    targetMin = item.nominalawal - ((item.nominalawal / daysInMonth) * (today.getDate() - 1))
+                    console.log(targetMin)
+                    if (targetMin > item.nominal) {
+                        colorB = 'text-danger';
+                    } else {
+                        colorB = 'text-success';
+                    }
+
                     if (numColor < 0.25) {
                         color = 'text-danger';
                     } else if (numColor < 0.5) {
@@ -290,9 +306,9 @@
                         <form id="form-pengeluaran" class="m-3">
                                 <div class="card">
                                         <div class="card-header">
-                                                <button type="button" class="btn"> <i class="fa-sharp fa-solid fa-circle fa-lg ${color}"
-                                                                id="reset" value=${item.id} data-name=${item.nama}"></i></button>
-                                                <button type="button" class="btn float-end"><i class="fas fa-trash-alt text-danger" id="delete"
+                                            <button type="button" class="btn"> <i class="fa-sharp fa-solid fa-circle fa-lg ${color}"
+                                                                id="reset" value=${item.id} data-name=${item.nama}"></i> <i class="fa-sharp fa-solid fa-circle fa-lg ${colorB}"></i></button>
+                                            <button type="button" class="btn float-end"><i class="fas fa-trash-alt text-danger" id="delete"
                                                                 value=${item.id} data-name=${item.nama}></i></button>
                                         </div>
                                         <div class="card-body">
@@ -359,14 +375,6 @@
             })
         })
 
-        // Membuat objek tanggal untuk tanggal hari ini
-        var today = new Date();
-
-        // Menghitung jumlah hari dalam bulan ini
-        var daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-
-        // Menghitung berapa hari lagi untuk akhir bulan
-        var daysLeft = (daysInMonth + 2) - today.getDate();
         if (daysLeft < 8) {
             color = '#f66e84';
         } else if (daysLeft < 17) {
