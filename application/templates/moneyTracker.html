@@ -64,14 +64,14 @@
         </header>
         <main>
             <div class="container mt-5">
-
                 <div id="alert-container"></div>
-                <div id="container-card" style="display: flex; flex-wrap: wrap;">
+                <div id="container-card" class="row" style="display: flex; flex-wrap: wrap;">
                 </div>
 
             </div>
         </main>
         <footer>
+
             <div id="container-coloralert" class="row mb-1">
             </div>
             <div class="row ">
@@ -286,29 +286,32 @@
                         color = 'text-success';
                     }
                     html += `
+                    <div class="col-sm-6 my-1">
                         <form id="form-pengeluaran" class="m-3">
-                            <div class="card w-250 " style="width: 18rem;">          
-                                <div class="card-header">
-                                    
-                                <button type="button" class="btn"> <i class="fa-sharp fa-solid fa-circle fa-lg ${color}" id="reset" value=${item.id} data-name=${item.nama}"></i></button>
-                                <button type="button" class="btn float-end"><i class="fas fa-trash-alt text-danger"  id="delete" value=${item.id} data-name=${item.nama}></i></button>
+                                <div class="card">
+                                        <div class="card-header">
+                                                <button type="button" class="btn"> <i class="fa-sharp fa-solid fa-circle fa-lg ${color}"
+                                                                id="reset" value=${item.id} data-name=${item.nama}"></i></button>
+                                                <button type="button" class="btn float-end"><i class="fas fa-trash-alt text-danger" id="delete"
+                                                                value=${item.id} data-name=${item.nama}></i></button>
+                                        </div>
+                                        <div class="card-body">
+                                                <h5 class="card-title">${item.nama}</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">${formattedNumber}</h6>
+                                                <div class="mb-3">
+                                                        <input type="hidden" name="id" value="${item.id}">
+                                                        <label for="nominal" class="form-label">Pengeluaran</label>
+                                                        <input type="text" class="form-control" name="nominal" id="nominal-${item.id}" required
+                                                                title="Harap isi bidang ini">
+                                                </div>
+                                                <p class="card-text" id="terbilang-${item.id}"> </p>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-outline-primary ms-auto">Simpan</button>
+                                        </div>
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">${item.nama}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">${formattedNumber}</h6>
-                                    <div class="mb-3">
-                                        <input type="hidden" name="id" value="${item.id}">
-                                        <label for="nominal" class="form-label">Pengeluaran</label>
-                                        <input type="text" class="form-control" name="nominal" id="nominal-${item.id}" required
-                                            title="Harap isi bidang ini">
-                                    </div>
-                                    <p class="card-text" id="terbilang-${item.id}"> </p>
-                                </div>
-                                <div class="card-footer d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-outline-primary ms-auto">Simpan</button>
-                                </div>
-                            </div>
                         </form>
+                    </div>
                     `;
                 });
 
