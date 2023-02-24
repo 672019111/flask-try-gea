@@ -132,17 +132,7 @@
 </body>
 
 <script>
-    // Fungsi untuk menampilkan loading
-    // Membuat objek tanggal untuk tanggal hari ini
-    var today = new Date();
 
-    // Menghitung jumlah hari dalam bulan ini
-    var daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-
-    // Menghitung berapa hari lagi untuk akhir bulan
-    var daysLeft = (daysInMonth + 2) - today.getDate();
-
-    const oldContent = $('#loadingModal').html();
     function showLoading() {
         $('#loadingModal').modal('show');
     }
@@ -151,6 +141,8 @@
     function hideLoading() {
         $('#loadingModal').modal('hide');
     }
+
+
     const conferNominal = (id) => {
 
         let idterbilang = '*#terbilang' + '-' + id
@@ -256,9 +248,9 @@
             url: "{{ url_for ('moneyTracking') }}",
             type: "GET",
             dataType: "json",
-            // beforeSend: function () {
-            //     showLoading();
-            // },
+            beforeSend: function () {
+                // showLoading();
+            },
             success: function (result) {
                 if (!result.data) {
                     const html = `

@@ -1,10 +1,19 @@
+// Fungsi untuk menampilkan loading
+// Membuat objek tanggal untuk tanggal hari ini
+var today = new Date();
+
+// Menghitung jumlah hari dalam bulan ini
+var daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+// Menghitung berapa hari lagi untuk akhir bulan
+var daysLeft = (daysInMonth + 2) - today.getDate();
 
 
 function msg(message, type) {
     var alertClass = 'alert-' + type;
     var alert = '<div class="alert ' + alertClass + '" role="alert">' + message + '</div>';
     $('#alert-container').html(alert);
-    
+
     setTimeout(function () {
         $('#alert-container').empty();
     }, 5000);

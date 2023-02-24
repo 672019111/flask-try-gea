@@ -2,16 +2,35 @@ from application import app
 from flask import render_template, url_for, request, redirect, flash, session, jsonify
 from application.models.indexModal import *
 from application.controllers.MoneyTrackinghandler import *
+from application.controllers.outhHandler import *
 
 # controlers untuk ngatur rooter
 
 
 @app.route('/')
+@usersLoginRequired
 def home():
     return redirect(url_for('moneyTrackingpage'))
     # return render_template("index.html")
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        print("udah disini ")
+        login = loginHandler()
+        if login['status'] == True:
+            print("true", login)
+            return redirect(url_for('home'))
+        else:
+            print(login)
+            return redirect(url_for('login'))
+    # return redirect(url_for('login'))
+    return render_template("outh/login.html")
+
+
 @app.route('/v/moneyTracking')
+@usersLoginRequired
 def moneyTrackingpage():
     return render_template("moneyTracker.html")
 
@@ -20,11 +39,14 @@ def moneyTrackingpage():
 def note():
     return render_template("note.html")
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
 
 # web servis
+
+
 def jsonify_response(status_code, status, message=None, data=None):
     response = {
         'status_code': status_code,
