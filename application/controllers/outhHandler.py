@@ -29,7 +29,4 @@ def usersLoginRequired(f):
 @app.route('/logout')
 def logout():
     session.pop('loggedin', None)
-    session.pop('admin', None)
-    session.pop('id', None)
-    session.pop('user', None)
     return redirect(url_for('login'))

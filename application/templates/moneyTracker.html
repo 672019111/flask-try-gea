@@ -32,6 +32,13 @@
     <!-- Menambahkan ikon untuk aplikasi web di perangkat Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='/assets/img/icon.png') }}">
+
+    <style>
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -55,7 +62,7 @@
                                     data-bs-target="#modalTambah">Tambah</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="#">Link</a>
+                                <a class="nav-link fw-bold" href="{{ url_for ('logout') }}">LogOut</a>
                             </li>
                         </ul>
                     </div>
