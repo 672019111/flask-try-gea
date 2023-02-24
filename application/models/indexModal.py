@@ -1,20 +1,25 @@
 from application.settings.queryFile import QueryStringDb
 
 
-def readMoneyTrack():
+def readMoneyTrack(iduser):
     customQuery = QueryStringDb()
     query = '''         
-        select 
-            id, 
-            nama, 
-            nominal, 
-            nominalawal 
-        from 
-            moneytrack m 
-        order by 
-            id
+    SELECT 
+        id, 
+        nama, 
+        nominal, 
+        nominalawal 
+    FROM 
+        moneytrack m 
+    WHERE 
+        iduser = %(iduser)s
+    ORDER BY 
+        id;
             '''
-    kondisi = {}
+    kondisi = {
+        'iduser': iduser
+
+    }
     return customQuery.select(query, kondisi)
 
 
@@ -37,7 +42,7 @@ def readMoneyTrackByID(id):
     return customQuery.select(query, kondisi)
 
 
-def createMoneyTrack(nama, nominal):
+def createMoneyTrack(nama, nominal, iduser):
     customQuery = QueryStringDb()
     query = '''         
         INSERT INTO 
@@ -49,12 +54,15 @@ def createMoneyTrack(nama, nominal):
         VALUES (
             %(nama)s, 
             %(nominal)s, 
-            %(nominal)s
+            %(nominal)s,
+            %(iduser)s,
+
             );
             '''
     kondisi = {
         'nama': nama,
-        'nominal': nominal
+        'nominal': nominal,
+        'iduser': iduser
 
     }
     return customQuery.execute(query, kondisi)
@@ -73,6 +81,7 @@ def UpdateMoneyTrack(id, nominal):
 
     }
     return customQuery.execute(query, kondisi)
+
 
 def DeleteMoneyTrack(id):
     customQuery = QueryStringDb()

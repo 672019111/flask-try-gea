@@ -2,9 +2,11 @@ from application.models.indexModal import *
 
 from flask import request
 
+iduser = '8d1ac791-b9e1-4a0b-95ac-dbddb9cb0c78'
+# iduser = '8d1ac791-b9e1-4a0b-95ac-dbddb9cb0c781'
 
 def moneyTrackingHandler():
-    result = readMoneyTrack()['result']
+    result = readMoneyTrack(iduser)['result']
     return result
 
 
@@ -13,8 +15,7 @@ def addmoneyTrackingHandler():
     nominal = request.form['nominal']
 
     nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
-
-    result = createMoneyTrack(nama, nominal)
+    result = createMoneyTrack(nama, nominal, iduser)
 
     print("addmoneyTrackingHandler()", result)
 
