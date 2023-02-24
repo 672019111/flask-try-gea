@@ -8,8 +8,8 @@ from application.controllers.MoneyTrackinghandler import *
 
 @app.route('/')
 def home():
-    return render_template("index.html")
-
+    return redirect(url_for('moneyTrackingpage'))
+    # return render_template("index.html")
 
 @app.route('/v/moneyTracking')
 def moneyTrackingpage():
@@ -20,6 +20,9 @@ def moneyTrackingpage():
 def note():
     return render_template("note.html")
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 # web servis
 def jsonify_response(status_code, status, message=None, data=None):
