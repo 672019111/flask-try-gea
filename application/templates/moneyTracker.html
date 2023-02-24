@@ -25,18 +25,21 @@
     <script src="https://kit.fontawesome.com/e9a38f0d1e.js" crossorigin="anonymous"></script>
 
     <title>JonathanGea - MoneyTracking</title>
+    <!-- Menambahkan favicon untuk desktop -->
+    <link rel="icon" href="{{ url_for('static', filename='/assets/img/icon.png') }}" type="image/png">
+    <!-- Menambahkan ikon untuk perangkat mobile -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='/assets/img/icon.png') }}">
+    <!-- Menambahkan ikon untuk aplikasi web di perangkat Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='/assets/img/icon.png') }}">
 </head>
 
 <body>
     <div class="container-fluid ">
-
         <header>
-
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
                     <a class="navbar-brand fw-bold" href="#">MoneyTracking <span id="sisa-hari"></span>
-
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -235,7 +238,7 @@
                 });
             }
         });
-        
+
 
     }
     const displaydata = () => {
@@ -370,15 +373,10 @@
         } else {
             color = '#45ccb1';
         }
-
-        console.log("Sisa hari bulan ini: " + daysLeft);
-        
         $('#sisa-hari').html(daysLeft)
         $('#container-coloralert').html(`
                 <div class="col" style="width: 10px; height: 10px; background-color: ${color};"></div>
                 `)
-
-
     })
 
 </script>
