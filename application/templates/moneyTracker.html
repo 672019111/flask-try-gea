@@ -189,10 +189,10 @@
                 url: "{{ url_for ('moneyTracking') }}",
                 data: formData,
                 beforeSend: function () {
-                    showLoading();
+                    // showLoading();
                 },
                 success: function (response) {
-                    displaydata()
+                    // displaydata()
                     // msg('Pesan berhasil terkirim!', 'success');
                 },
                 error: function (xhr, status, error) {
@@ -210,13 +210,13 @@
                     url: "{{ url_for('moneyTracking') }}",
                     method: "DELETE",
                     beforeSend: function () {
-                        showLoading();
+                        // showLoading();
                     },
                     data: { id: id },
                     success: function (response) {
                         msg(`budget ${name} berhasil dihapus!`, 'success');
                         displaydata();
-                        hideLoading();
+                        // hideLoading();
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
@@ -232,13 +232,13 @@
                     url: "{{ url_for('resetmoneyTracking') }}",
                     method: "PUT",
                     beforeSend: function () {
-                        showLoading();
+                        // showLoading();
                     },
                     data: { id: id },
                     success: function (response) {
                         msg(`budget ${name} berhasil direset!`, 'success');
                         displaydata();
-                        hideLoading();
+                        // hideLoading();
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
@@ -359,7 +359,7 @@
                 data: formData,
                 beforeSend: function () {
                     $('#modalTambah').modal('hide');
-                    showLoading();
+                    // showLoading();
 
                 },
                 success: function (result) {
