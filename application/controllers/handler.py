@@ -7,17 +7,19 @@ def moneyTrackingHandler():
     result = readMoneyTrack()['result']
     return result
 
+
 def addmoneyTrackingHandler():
     nama = request.form['nama']
     nominal = request.form['nominal']
 
     nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
-    
+
     result = createMoneyTrack(nama, nominal)
 
     print("addmoneyTrackingHandler()", result)
-    
+
     return result
+
 
 def editmoneyTrackingHandler():
     id = request.form['id']
@@ -29,7 +31,7 @@ def editmoneyTrackingHandler():
 
     SisaBudget = dataMoneyTracking[0]['nominal']
     hasil = SisaBudget-nominal
-    result = UpdateMoneyTrack (id, hasil)
+    result = UpdateMoneyTrack(id, hasil)
     return result
 
 
@@ -37,7 +39,19 @@ def deletemoneyTrackingHandler():
     id = request.form['id']
 
     result = DeleteMoneyTrack(id)
-    print (result)
+    print(result)
 
     return result
-    
+
+
+def resetMoneyTrackingHandler():
+    id = request.form['id']
+    dataMoneyTracking = readMoneyTrackByID(id)['result']
+    budgetAwal = dataMoneyTracking[0]['nominalawal']
+
+    nominal = budgetAwal
+
+    result = UpdateMoneyTrack(id, nominal)
+    print(result)
+
+    return result

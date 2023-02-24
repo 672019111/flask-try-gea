@@ -35,7 +35,9 @@
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand fw-bold" href="#">MoneyTracking</a>
+                    <a class="navbar-brand fw-bold" href="#">MoneyTracking <span id="sisa-hari"></span>
+
+                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -67,13 +69,16 @@
             </div>
         </main>
         <footer>
+            <div id="container-coloralert" class="row mb-1">
+            </div>
+            <div class="row ">
+                <div class="col" style="width: 10px; height: 10px; background-color: #45ccb1;"></div>
+                <div class="col" style="width: 10px; height: 10px; background-color: #53b0f8;"></div>
+                <div class="col" style="width: 10px; height: 10px; background-color: #ffc241;"></div>
+                <div class="col" style="width: 10px; height: 10px; background-color: #f66e84;"></div>
+            </div>
         </footer>
-        <div class="row m-5">
-            <div class="col" style="width: 10px; height: 10px; background-color: #45ccb1;"></div>
-            <div class="col" style="width: 10px; height: 10px; background-color: #53b0f8;"></div>
-            <div class="col" style="width: 10px; height: 10px; background-color: #ffc241;"></div>
-            <div class="col" style="width: 10px; height: 10px; background-color: #f66e84;"></div>
-        </div>
+
     </div>
 
     <!-- Modal -->
@@ -129,23 +134,11 @@
     const oldContent = $('#loadingModal').html();
     function showLoading() {
         $('#loadingModal').modal('show');
-        // if ($('#loadingModal').html() == '') {
-        //     $('#loadingModal').html(oldContent);
-        //     $('#loadingModal').modal('show');
-        // }else{
-        //     $('#loadingModal').modal('show');
-        // }
-
     }
 
     // Fungsi untuk menclose loading
     function hideLoading() {
         $('#loadingModal').modal('hide');
-        // setTimeout(function () {
-        //     $('#loadingModal').empty();
-        //     $('.modal-backdrop.fade.show').remove()
-        //     $('#loadingModal').remove()
-        // }, 2000);
     }
     const conferNominal = (id) => {
 
@@ -220,6 +213,29 @@
                 });
             }
         });
+        $('*#reset').click(function () {
+            var id = $(this).attr('value');
+            var name = $(this).data('name');
+            if (confirm(`Anda yakin ingin reset data ${name}?`)) {
+                $.ajax({
+                    url: "{{ url_for('resetmoneyTracking') }}",
+                    method: "PUT",
+                    beforeSend: function () {
+                        showLoading();
+                    },
+                    data: { id: id },
+                    success: function (response) {
+                        msg(`budget ${name} berhasil direset!`, 'success');
+                        displaydata();
+                        hideLoading();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
+        
 
     }
     const displaydata = () => {
@@ -271,7 +287,7 @@
                             <div class="card w-250 " style="width: 18rem;">          
                                 <div class="card-header">
                                     
-                                <button type="button" class="btn" disabled> <i class="fa-sharp fa-solid fa-circle fa-lg ${color}"></i></button>
+                                <button type="button" class="btn"> <i class="fa-sharp fa-solid fa-circle fa-lg ${color}" id="reset" value=${item.id} data-name=${item.nama}"></i></button>
                                 <button type="button" class="btn float-end"><i class="fas fa-trash-alt text-danger"  id="delete" value=${item.id} data-name=${item.nama}></i></button>
                                 </div>
                                 <div class="card-body">
@@ -336,6 +352,33 @@
                 }
             })
         })
+
+        // Membuat objek tanggal untuk tanggal hari ini
+        var today = new Date();
+
+        // Menghitung jumlah hari dalam bulan ini
+        var daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+        // Menghitung berapa hari lagi untuk akhir bulan
+        var daysLeft = (daysInMonth + 2) - today.getDate();
+        if (daysLeft < 8) {
+            color = '#f66e84';
+        } else if (daysLeft < 17) {
+            color = '#ffc241';
+        } else if (daysLeft < 25) {
+            color = '#53b0f8';
+        } else {
+            color = '#45ccb1';
+        }
+
+        console.log("Sisa hari bulan ini: " + daysLeft);
+        
+        $('#sisa-hari').html(daysLeft)
+        $('#container-coloralert').html(`
+                <div class="col" style="width: 10px; height: 10px; background-color: ${color};"></div>
+                `)
+
+
     })
 
 </script>
