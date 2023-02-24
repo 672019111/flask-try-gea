@@ -254,9 +254,9 @@
             url: "{{ url_for ('moneyTracking') }}",
             type: "GET",
             dataType: "json",
-            beforeSend: function () {
-                showLoading();
-            },
+            // beforeSend: function () {
+            //     showLoading();
+            // },
             success: function (result) {
                 if (!result.data) {
                     const html = `
@@ -332,7 +332,7 @@
                 });
 
                 $("#container-card").html(html);
-                hideLoading();
+                // hideLoading();
                 items.forEach(item => conferNominal(item.id));
                 action();
             },

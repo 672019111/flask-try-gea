@@ -1,7 +1,7 @@
 from application import app
 from flask import render_template, url_for, request, redirect, flash, session, jsonify
 from application.models.indexModal import *
-from application.controllers.handler import *
+from application.controllers.MoneyTrackinghandler import *
 
 # controlers untuk ngatur rooter
 
