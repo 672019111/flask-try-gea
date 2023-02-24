@@ -189,11 +189,13 @@
                 url: "{{ url_for ('moneyTracking') }}",
                 data: formData,
                 beforeSend: function () {
-                    // showLoading();
+                    showLoading();
                 },
                 success: function (response) {
-                    // displaydata()
+                    displaydata()
+                    hideLoading()
                     // msg('Pesan berhasil terkirim!', 'success');
+
                 },
                 error: function (xhr, status, error) {
                     alert('Terjadi kesalahan!');
