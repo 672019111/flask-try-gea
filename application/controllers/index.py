@@ -30,7 +30,7 @@ def login():
 
 
 @app.route('/v/moneyTracking')
-@usersLoginRequired
+# @usersLoginRequired
 def moneyTrackingpage():
     return render_template("moneyTracker.html")
 
