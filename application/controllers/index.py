@@ -8,10 +8,11 @@ from application.controllers.outhHandler import *
 
 
 @app.route('/')
-@usersLoginRequired
+# @usersLoginRequired
 def home():
-    return redirect(url_for('moneyTrackingpage'))
+    # return redirect(url_for('moneyTrackingpage'))
     # return render_template("index.html")
+    return render_template("layout.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
