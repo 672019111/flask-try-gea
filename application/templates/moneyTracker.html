@@ -77,9 +77,6 @@
             </div>
         </main>
         <footer>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDetail">
-                Launch demo modal
-            </button>
 
             <div id="container-coloralert" class="row mb-1">
             </div>
@@ -287,9 +284,9 @@
                 data: { id: id },
                 success: function (response) {
                     res = response['data']
+                    let html = ''
                     console.log(response)
                     if (res) {
-                        let html = ''
                         for (let i = 0; i < res.length; i++) {
                             let number = res[i].nominal;
                             const dateStr = res[i].tanggal;
@@ -311,6 +308,8 @@
                         }
                         $('#table_historymoneyTracking tbody').html(html);
                     }
+                    $('#table_historymoneyTracking tbody').html(html);
+
                     $('#modalDetail').modal('show');
                 },
                 error: function (xhr, status, error) {
