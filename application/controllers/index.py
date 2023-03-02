@@ -75,7 +75,7 @@ def moneyTracking():
     return jsonify_response(200, 'Success', 'Ok', result)
 
 
-@app.route('/moneyTracking/reset', methods=['POST'])
+@app.route('/moneyTracking/reset', methods=['PUT'])
 def resetmoneyTracking():
     result = resetMoneyTrackingHandler()
     return jsonify_response(200, 'Success', 'Ok', result)
