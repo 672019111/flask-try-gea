@@ -115,7 +115,7 @@ def CreatelogMoneytrack(id, nominal,):
 
 def readlogMoneytrack(id):
     customQuery = QueryStringDb()
-    query = '''         
+    query = ''' 
         select 
             keterangan, 
             nominal, 
@@ -124,6 +124,8 @@ def readlogMoneytrack(id):
             logMoneytrack
         where 
             idmoneytrack = %(id)s
+            AND EXTRACT(YEAR FROM tanggal) = EXTRACT(YEAR FROM CURRENT_DATE) 
+            AND EXTRACT(MONTH FROM tanggal) = EXTRACT(MONTH FROM CURRENT_DATE)
         order by 
             tanggal desc 
             '''
