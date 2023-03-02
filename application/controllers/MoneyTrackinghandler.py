@@ -17,7 +17,6 @@ def addmoneyTrackingHandler():
     nominal = int(nominal.replace("Rp. ", "").replace(".", ""))
     result = createMoneyTrack(nama, nominal, iduser)
 
-    print("addmoneyTrackingHandler()", result)
 
     return result
 
@@ -54,5 +53,13 @@ def resetMoneyTrackingHandler():
 
     result = UpdateMoneyTrack(id, nominal)
     print(result)
+
+    return result
+
+
+def DisplayLogMoneyTrackingHandler():
+    id = request.form['id']
+
+    result = readlogMoneytrack(id)['result']
 
     return result

@@ -96,3 +96,24 @@ def DeleteMoneyTrack(id):
 
     }
     return customQuery.execute(query, kondisi)
+
+
+def readlogMoneytrack(id):
+    customQuery = QueryStringDb()
+    query = '''         
+        select 
+            keterangan, 
+            nominal, 
+            tanggal 
+        from 
+            logMoneytrack
+        where 
+            idmoneytrack = %(id)s
+        order by 
+            tanggal desc 
+            '''
+    kondisi = {
+        'id': id,
+
+    }
+    return customQuery.select(query, kondisi)

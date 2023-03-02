@@ -293,14 +293,25 @@
                 },
                 data: { id: id },
                 success: function (response) {
+                    console.log(response)
+
                     res = response['data']
                     let html = ''
                     for (let i = 0; i < response['data'].length; i++) {
+                        let number = res[i].nominal;
+                        const dateStr = res[i].tanggal;
+                        const options = {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        };
 
+                        const formattedDate = new Date(dateStr).toLocaleDateString('en-US', options);
+                        const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
                         html += `
                                 <tr>
-                                    <td>${res[i].tanggal}</td>
-                                    <td>${res[i].nominal}</td>
+                                    <td>${formattedDate}</td>
+                                    <td>${formattedNumber}</td>
                                     <td>${res[i].keterangan}</td>
                                 </tr>
                             `;
