@@ -77,6 +77,9 @@
             </div>
         </main>
         <footer>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDetail">
+                Launch demo modal
+            </button>
 
             <div id="container-coloralert" class="row mb-1">
             </div>
@@ -119,6 +122,38 @@
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal - money history -->
+    <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalDetailLabel">Detail Money</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="table_historymoneyTracking">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Nominal</th>
+                                <th scope="col">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${response[i].tanggal}</td>
+                                <td>${response[i].nominal}</td>
+                                <td>${response[i].keterangan}</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -202,7 +237,6 @@
                 }
             });
         });
-
         $('*#delete').click(function () {
             var id = $(this).attr('value');
             var name = $(this).data('name');
@@ -247,6 +281,38 @@
                 });
             }
         });
+        $('*#detail').click(function () {
+            // event.preventDefault();
+            var id = $(this).attr('value');
+            var name = $(this).data('name');
+            $.ajax({
+                url: "{{ url_for('historymoneyTracking') }}",
+                method: "POST",
+                beforeSend: function () {
+                    // showLoading();
+                },
+                data: { id: id },
+                success: function (response) {
+                    res = response['data']
+                    let html = ''
+                    for (let i = 0; i < response['data'].length; i++) {
+
+                        html += `
+                                <tr>
+                                    <td>${res[i].tanggal}</td>
+                                    <td>${res[i].nominal}</td>
+                                    <td>${res[i].keterangan}</td>
+                                </tr>
+                            `;
+                    }
+                    $('#table_historymoneyTracking tbody').html(html);
+                    $('#modalDetail').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
 
 
     }
@@ -286,7 +352,6 @@
                     let color = '';
                     const numColor = number / item.nominalawal;
                     targetMin = item.nominalawal - ((item.nominalawal / daysInMonth) * (today.getDate() - 1))
-                    console.log(targetMin)
                     if (targetMin > item.nominal) {
                         colorB = 'text-danger';
                     } else {
@@ -323,6 +388,7 @@
                                                 <p class="card-text" id="terbilang-${item.id}"> </p>
                                         </div>
                                         <div class="card-footer d-flex justify-content-end">
+                                                <button type="button" class="btn float-end"  id="detail" value=${item.id} data-name=${item.nama}><i class="fas fa-history fa-2xl text-info mt-3"></i></button>
                                                 <button type="submit" class="btn btn-outline-primary ms-auto">Simpan</button>
                                         </div>
                                 </div>
@@ -352,7 +418,6 @@
             event.preventDefault();
             var formData = $(this).serialize();
             var nama = decodeURIComponent(formData).split("nama=")[1].split("&")[0];
-            console.log(formData)
             $.ajax({
                 url: "{{ url_for ('moneyTracking') }}",
                 type: "POST",
@@ -374,6 +439,8 @@
                 }
             })
         })
+
+
 
         if (daysLeft < 8) {
             color = '#f66e84';

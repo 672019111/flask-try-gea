@@ -75,7 +75,25 @@ def moneyTracking():
     return jsonify_response(200, 'Success', 'Ok', result)
 
 
-@app.route('/moneyTracking/reset', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/moneyTracking/reset', methods=['POST'])
 def resetmoneyTracking():
     result = resetMoneyTrackingHandler()
+    return jsonify_response(200, 'Success', 'Ok', result)
+
+
+@app.route('/moneyTracking/history', methods=['POST'])
+def historymoneyTracking():
+    result = [
+        {'tanggal': '2022-01-01', 'nominal': 1000000,
+         'keterangan': 'Pembayaran Gaji'},
+        {'tanggal': '2022-01-05',    'nominal': 250000,
+            'keterangan': 'Pembelian Bahan Baku'},
+        {'tanggal': '2022-01-15',   'nominal': 750000,
+            'keterangan': 'Pembayaran Sewa'},
+        {'tanggal': '2022-02-01', 'nominal': 1250000,
+            'keterangan': 'Pembayaran Gaji'},
+        {'tanggal': '2022-02-05',    'nominal': 350000,
+            'keterangan': 'Pembelian Bahan Baku'},
+        {'tanggal': '2022-02-15',   'nominal': 1000000, 'keterangan': 'Pembayaran Sewa'}]
+
     return jsonify_response(200, 'Success', 'Ok', result)
