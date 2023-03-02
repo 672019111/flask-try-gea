@@ -52,7 +52,7 @@ def jsonify_response(status_code, status, message=None, data=None):
     response = {
         'status_code': status_code,
         'status': status,
-        'message': message
+        'message': message,
     }
     if data:
         response['data'] = data

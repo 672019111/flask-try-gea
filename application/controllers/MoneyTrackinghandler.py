@@ -32,6 +32,8 @@ def editmoneyTrackingHandler():
     SisaBudget = dataMoneyTracking[0]['nominal']
     hasil = SisaBudget-nominal
     result = UpdateMoneyTrack(id, hasil)
+    log = CreatelogMoneytrack(id, nominal)
+    print (log)
     return result
 
 

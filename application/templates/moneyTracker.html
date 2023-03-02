@@ -140,17 +140,10 @@
                             <tr>
                                 <th scope="col">Tanggal</th>
                                 <th scope="col">Nominal</th>
-                                <th scope="col">Keterangan</th>
+                                <!-- <th scope="col">Keterangan</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>${response[i].tanggal}</td>
-                                <td>${response[i].nominal}</td>
-                                <td>${response[i].keterangan}</td>
-                            </tr>
-
-
                         </tbody>
                     </table>
                 </div>
@@ -293,30 +286,31 @@
                 },
                 data: { id: id },
                 success: function (response) {
-                    console.log(response)
-
                     res = response['data']
-                    let html = ''
-                    for (let i = 0; i < response['data'].length; i++) {
-                        let number = res[i].nominal;
-                        const dateStr = res[i].tanggal;
-                        const options = {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        };
+                    console.log (response)
+                    if (res) {
+                        let html = ''
+                        for (let i = 0; i < res.length; i++) {
+                            let number = res[i].nominal;
+                            const dateStr = res[i].tanggal;
+                            const options = {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            };
 
-                        const formattedDate = new Date(dateStr).toLocaleDateString('en-US', options);
-                        const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
-                        html += `
+                            const formattedDate = new Date(dateStr).toLocaleDateString('en-US', options);
+                            const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+                            html += `
                                 <tr>
                                     <td>${formattedDate}</td>
                                     <td>${formattedNumber}</td>
-                                    <td>${res[i].keterangan}</td>
+                                    <!-- <td>${res[i].keterangan}</td> -->
                                 </tr>
                             `;
+                        }
+                        $('#table_historymoneyTracking tbody').html(html);
                     }
-                    $('#table_historymoneyTracking tbody').html(html);
                     $('#modalDetail').modal('show');
                 },
                 error: function (xhr, status, error) {

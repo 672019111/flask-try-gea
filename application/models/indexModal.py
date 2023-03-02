@@ -98,6 +98,21 @@ def DeleteMoneyTrack(id):
     return customQuery.execute(query, kondisi)
 
 
+def CreatelogMoneytrack(id, nominal,):
+    customQuery = QueryStringDb()
+    query = '''         
+        INSERT INTO logMoneytrack 
+            (keterangan, nominal, idmoneytrack) 
+        VALUES 
+            (%(keterangan)s, %(nominal)s, %(id)s)
+            '''
+    kondisi = {
+        'id': id,
+        'keterangan': 'null',
+        'nominal': nominal,
+    }
+    return customQuery.execute(query, kondisi)
+
 def readlogMoneytrack(id):
     customQuery = QueryStringDb()
     query = '''         
