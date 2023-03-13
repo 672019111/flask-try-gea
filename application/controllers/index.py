@@ -41,6 +41,11 @@ def note():
     return render_template("note.html")
 
 
+@app.route('/AuthManager')
+def AuthManagerPage():
+    return render_template("AuthManager.html")
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404

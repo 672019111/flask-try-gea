@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Copy Text</title>
+    <!-- Memasukkan link CSS untuk Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="form-group">
+            <label for="input1">Text 1:</label>
+            <div class="input-group">
+                <!-- Menambahkan class form-control pada input -->
+                <input type="text" class="form-control" value="ytwtvnhmempc@eurokool.com" id="input1" readonly>
+                <div class="input-group-append">
+                    <!-- Mengganti tombol button dengan tombol input -->
+                    <input type="button" class="btn btn-primary" value="Copy text" onclick="copyText('input1')">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input2">Text 2:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" value='r4gR"uN3C3%:tV2X' id="input2" readonly>
+                <div class="input-group-append">
+                    <input type="button" class="btn btn-primary" value="Copy text" onclick="copyText('input2')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memasukkan link JavaScript untuk Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        function copyText(inputId) {
+            // Get the text field
+            var copyText = document.getElementById(inputId);
+
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+
+            // Menampilkan notifikasi copy berhasil menggunakan Bootstrap
+            $(copyText).popover({
+                content: "Text copied!",
+                placement: "bottom",
+                trigger: "focus"
+            });
+            $(copyText).popover("show");
+            setTimeout(function () {
+                $(copyText).popover("dispose");
+            }, 1000);
+        }
+    </script>
+
+</body>
+
+</html>
