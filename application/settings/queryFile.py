@@ -9,12 +9,10 @@ def responseJSON(status_code, flag, message, result):
     resp['result'] = result
     return resp
 
-
 def rows_to_dict_list(cursor):
     ''' Function return list of dictionary  '''
     columns = [i[0].lower() for i in cursor.description]
     return [dict(zip(columns, row)) for row in cursor]
-
 
 class QueryStringDb(object):
     def __init__(self):

@@ -4,42 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <title>Copy Text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Memasukkan link CSS untuk Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="form-group">
-            <label for="input1">Text 1:</label>
-            <div class="input-group">
-                <!-- Menambahkan class form-control pada input -->
-                <input type="password" class="form-control" value="ytwtvnhmempc@eurokool.com" id="input1" readonly>
-                <div class="input-group-append">
-                    <!-- Mengganti tombol button dengan tombol input -->
-                    <input type="button" class="btn btn-primary" value="Copy text" onclick="copyText('input1')">
-                </div>
+    <div class="container" id="container-data">
+        <div class="row">
+            <div class="col-sm-6 my-1">
+                <form id="form-outh" class="m-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title text-center">Fake Akun </h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Nama</h6>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="ytwtvnhmempc@eurokool.com"
+                                        id="input1" readonly>
+                                    <div class="input-group-append">
+                                        <input type="button" class="btn btn-primary" value="Copy text"
+                                            onclick="copyText('input1')">
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">Nama</h6>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" value="ytwtvnhmempc@eurokool.com"
+                                        id="input2  " readonly>
+                                    <div class="input-group-append">
+                                        <input type="button" class="btn btn-primary" value="Copy text"
+                                            onclick="copyText('input2   ')">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 my-1">
+                <form id="form-outh" class="m-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title text-center">Mendeley </h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Nama</h6>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="672019111@student.uksw.edu"
+                                        id="input3" readonly>
+                                    <div class="input-group-append">
+                                        <input type="button" class="btn btn-primary" value="Copy text"
+                                            onclick="copyText('input3')">
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">Nama</h6>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" value="UL%bDcFYZ549" id="input4"
+                                        readonly>
+                                    <div class="input-group-append">
+                                        <input type="button" class="btn btn-primary" value="Copy text"
+                                            onclick="copyText('input4')">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 my-1">
+                <form id="form-outh" class="m-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title text-center">VIU</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Nama</h6>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="nila4@shozu.my.id" id="input5"
+                                        readonly>
+                                    <div class="input-group-append">
+                                        <input type="button" class="btn btn-primary" value="Copy text"
+                                            onclick="copyText('input5')">
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">Nama</h6>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" value="DVIQ0#l7ykD4" id="input6"
+                                        readonly>
+                                    <div class="input-group-append">
+                                        <input type="button" class="btn btn-primary" value="Copy text"
+                                            onclick="copyText('input6')">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="input2">Text 2:</label>
-            <div class="input-group">
-                <input type="password" class="form-control" value='r4gR"uN3C3%:tV2X' id="input2" readonly>
-                <div class="input-group-append">
-                    <input type="button" class="btn btn-primary" value="Copy text" onclick="copyText('input2')">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="input3">Text 3:</label>
-            <div class="input-group">
-                <input type="password" class="form-control" value='jgea260922' id="input3" readonly>
-                <div class="input-group-append">
-                    <input type="button" class="btn btn-primary" value="Copy text" onclick="copyText('input3')">
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Memasukkan link JavaScript untuk Bootstrap -->
@@ -70,6 +144,8 @@
                 $(copyText).popover("dispose");
             }, 1000);
         }
+
+
     </script>
 
 </body>
